@@ -65,7 +65,12 @@
               <select id="fromToken">
                 <!-- Pre-filled with USD1 and T; you can add more options -->
                 <option value="0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d" selected>USD1 (World Liberty Financial)</option>
+			    <option value="0x55d398326f99059fF775485246999027B3197955">USDT (Tether USD)</option>
+			    <option value="0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56">BUSD (Binance USD)</option>
                 <option value="0x7b47B9E05262C737B562C4881444370aA50234d4">T (Trump Mobile)</option>
+			 
+            
+            
               </select>
              
             </div>
@@ -93,10 +98,8 @@
           <div class="token-side" style="flex:1">
             <div class="token-select" style="min-width:220px">
               <select id="toToken">
-                <option value="0x7b47B9E05262C737B562C4881444370aA50234d4"><img src="./Partner/10.png" alt="" width="10px"
-                  height="10px">T (Trump Mobile)</option>
-                <option value="0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d"><img src="./Partner/11.png" alt="" width="10px"
-                  height="10px">USD1 (World Liberty Financial)</option>
+                <option value="0x7b47B9E05262C737B562C4881444370aA50234d4">T (Trump Mobile)</option>
+                <option value="0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d">USD1 (World Liberty Financial)</option>
               </select>
             </div>
           </div>
@@ -176,7 +179,9 @@
 
   const TOKENS = {
     USD1: { address: '0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d' },
-    T:    { address: '0x7b47B9E05262C737B562C4881444370aA50234d4' }
+    T:    { address: '0x7b47B9E05262C737B562C4881444370aA50234d4' },
+USDT: { address: '0x55d398326f99059fF775485246999027B3197955' },
+   BUSD: { address: '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56' }
   };
 
   // --- Elements ---
