@@ -47,7 +47,7 @@
   <div class="wrap">
     <div class="card">
       <div class="header">
-        <h1>Swap • PancakeSwap v2 (BSC)</h1>
+        <h1>T ↔ USD1 Swap (BSC)</h1>
         <div class="row">
           <div class="net" id="network">Disconnected</div>
           <button class="btn accent" id="connectBtn">Connect Wallet</button>
@@ -61,8 +61,8 @@
             <div class="token-select" style="min-width:220px">
               <select id="fromToken">
                 <!-- Pre-filled with USD1 and T; you can add more options -->
-                <option value="0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d" selected>USD1 (World Liberty Financial)</option>
-                <option value="0x7b47B9E05262C737B562C4881444370aA50234d4">T (Trump Mobile)</option>
+                <option value="0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d" selected>$USD1 (World Liberty Financial)</option>
+                <option value="0x7b47B9E05262C737B562C4881444370aA50234d4">$T (Trump Mobile)</option>
               </select>
               <small class="muted">Pair: 0x7E3286FF19b2c9CC80cf7013F32C3BA3e13e9C01</small>
             </div>
@@ -73,7 +73,7 @@
           <div>
             <span class="tag" id="fromSym">—</span>
             <span class="muted">Balance:</span> <span id="fromBal">—</span>
-            <span class="muted">Allowance:</span> <span id="fromAll">—</span>
+            <!--<span class="muted">Allowance:</span> <span id="fromAll">—</span>--!>
           </div>
           <button class="btn secondary" id="maxBtn">Max</button>
         </div>
@@ -89,8 +89,8 @@
           <div class="token-side" style="flex:1">
             <div class="token-select" style="min-width:220px">
               <select id="toToken">
-                <option value="0x7b47B9E05262C737B562C4881444370aA50234d4">T (Trump Mobile)</option>
-                <option value="0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d">USD1 (World Liberty Financial)</option>
+                <option value="0x7b47B9E05262C737B562C4881444370aA50234d4">$T (Trump Mobile)</option>
+                <option value="0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d">$USD1 (World Liberty Financial)</option>
               </select>
             </div>
           </div>
@@ -127,10 +127,10 @@
         <div class="status link" id="txlink"></div>
       </div>
 
-      <div class="panel" style="display:flex;gap:10px;align-items:center;justify-content:space-between">
+      <!--<div class="panel" style="display:flex;gap:10px;align-items:center;justify-content:space-between">
         <div class="muted">Router: PancakeSwap v2</div>
         <a href="https://pancakeswap.finance/swap?outputCurrency=0x7b47B9E05262C737B562C4881444370aA50234d4&inputCurrency=0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d" target="_blank">Open on PancakeSwap</a>
-      </div>
+      </div>--!>
     </div>
   </div>
 
