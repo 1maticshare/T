@@ -1,1 +1,690 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <link rel="preload" href="./assets/fonts/F37Judge-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous"> <link rel="preload" href="./assets/img/hero/bg.webp" as="image"> <link rel="preload" href="./assets/img/hero/02.webp" as="image"> <link rel="dns-prefetch" href="//fonts.googleapis.com"> <link rel="dns-prefetch" href="//fonts.gstatic.com"> <link rel="shortcut icon" href="./assets/T.png"> <title>Trump Mobile - Own The Board</title> <style> body { opacity: 0; visibility: hidden; } [data-fls-loaded] body { animation: show-body 0.3s ease 0.1s forwards; } @keyframes show-body { 0% { opacity: 0; visibility: hidden; } 100% { opacity: 1; visibility: visible; } } /* Performance optimizations */ * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; } /* Optimize images */ img { image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; } /* Reduce paint operations */ .hero__bg img, .about__bg img, .monopoly__bg img, .level__bg img, .contact__bg img { will-change: transform; } /* Desktop-specific styling for contract address fields */ @media (min-width: 768px) { .contract-address { min-width: 325px !important; width: 100% !important; } } @media (min-width: 1024px) { .contract-address { min-width: 407px !important; } } @media (min-width: 1440px) { .contract-address { min-width: 487px !important; } } /* Fix horizontal scrolling issues on mobile */ @media (max-width: 47.99875em) { /* iOS Safari fixed header fix - replace fixed with absolute */ body { width: 100%; overflow-y: scroll; -webkit-overflow-scrolling: touch; position: static; scroll-behavior: smooth; } /* Remove problematic properties that break iOS Safari */ .wrapper { overflow: visible !important; contain: none !important; } /* THE ACTUAL FIX: Replace position: fixed with position: absolute on iOS */ .header { position: absolute !important; will-change: auto !important; transform: none !important; z-index: 9999 !important; } /* Fix features section background elements that use 100vw */ .features__cards::before, .features__cards::after { width: 100% !important; left: 0 !important; transform: none !important; } /* Fix join section image transforms that cause overflow */ .join__image { transform: translateX(0) scaleX(-1) !important; max-width: 100%; } .reverse .join__image { transform: translateX(0) scaleX(-1) !important; } /* Fix join section padding that uses viewport units */ .join__main { padding: 1.25rem 1rem 1.625rem 1.25rem !important; width: calc(100% - 1.875rem) !important; max-width: 100%; } /* Fix join line decoration that uses viewport units */ .join__line-dec::before { width: 100% !important; left: 0 !important; } /* Ensure join line displays properly */ .join__line { width: 100%; overflow: visible; } .join__line-dec { width: 100%; overflow: visible; } /* Prevent horizontal overflow on specific problematic elements */ .features__cards, .join__main, .join__image { max-width: 100vw; overflow-x: hidden; } } </style> <style> /* Mobile-only: center content containers so buttons center */ @media (max-width: 47.99875em) { .about__content, .monopoly__content, .level__content { display: flex; flex-direction: column; align-items: center; text-align: center; } .about__text, .monopoly__text, .level__text { align-items: center; } } </style> <script type="module" crossorigin="" src="./js/index.min.js?v=1755523771715"></script> <link rel="stylesheet" crossorigin="" href="./css/index.min.css?v=1755523771715"> <style> /* Mobile-only centering for About, Monopoly, and Level sections (inline ensures it overrides) */ @media (max-width: 47.99875em) { .about__sub-title, .about__title, .monopoly__sub-title, .monopoly__title, .level__sub-title, .level__title { text-align: center; } } </style> <script defer src="/_vercel/insights/script.js"></script> </head> <body> <div class="wrapper"> <div class="menu-open-bg"></div> <header data-fls-header="" data-fls-header-scroll="" class="header"> <div class="header__container"> <a href="" class="header__logo"> <img alt="TrumpMobile" src="./assets/img/logo.png"> </a> <div class="header__main"> <div class="header__menu menu"> <button type="button" data-fls-menu="" class="menu__icon icon-menu"></button> <nav class="menu__body"> <ul class="menu__list"> <li class="menu__item"> <a href="#" data-fls-scrollto=".about" class="menu__link">About Us</a> </li> <li class="menu__item"> <a href="#" data-fls-scrollto=".monopoly" class="menu__link">Trump Mobile</a> </li> <li class="menu__item"> <a href="#" data-fls-scrollto=".features" class="menu__link">How to Play</a> </li> <li class="menu__item"> <a href="#" data-fls-scrollto=".level" class="menu__link">Own The Board</a> </li> </ul> </nav> </div> <div class="header__actions" data-fls-dynamic=".menu__body, 1024.98"> <a href="./swap" target="" class="header__button button red"> <span>join the game</span> </a> <div class="header__social social"> <a href="http://t.me/Trump_Mobile_Token" target="_blank" class="social__item"> <svg xmlns="http://www.w3.org/2000/svg" width="22" height="19" viewbox="0 0 22 19" fill="none"> <path fill-rule="evenodd" clip-rule="evenodd" d="M19.7212 0.129985C19.9917 0.0148902 20.2877 -0.0248051 20.5786 0.0150299C20.8694 0.054865 21.1443 0.172775 21.3748 0.356486C21.6052 0.540197 21.7827 0.782995 21.8889 1.05961C21.995 1.33622 22.0259 1.63653 21.9782 1.92929L19.4957 17.1526C19.2549 18.621 17.6611 19.4631 16.329 18.7316C15.2147 18.1197 13.5597 17.1769 12.0711 16.1931C11.3267 15.7007 9.0467 14.1238 9.32691 13.0018C9.56772 12.0424 13.3988 8.4371 15.588 6.29365C16.4472 5.45154 16.0554 4.96575 15.0407 5.74036C12.5209 7.6636 8.47532 10.5883 7.13772 11.4116C5.95775 12.1375 5.34259 12.2615 4.60702 12.1375C3.26505 11.9118 2.0205 11.5621 1.00471 11.1361C-0.367906 10.5606 -0.301136 8.65289 1.00362 8.09738L19.7212 0.129985Z" fill="#F9F9F9"></path> </svg> </a> <a href="https://x.com/MaticShareGame" target="_blank" class="social__item"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="21" viewbox="0 0 24 21" fill="none"> <path d="M18.9 0H22.581L14.541 8.89531L24 21H16.5945L10.794 13.6572L4.1565 21H0.474L9.0735 11.4848L0 0H7.5945L12.837 6.70986L18.9 0ZM17.61 18.8681H19.65L6.4845 2.02034H4.2975L17.61 18.8681Z" fill="#F9F9F9"></path> </svg> </a> </div> </div> </div> </div> </header> <main class="page"> <section class="page__hero hero"> <div class="hero__bg"> <img alt="BG" src="./assets/img/hero/bg.webp" loading="eager" fetchpriority="high"> </div> <div class="hero__container"> <div class="hero__content"> <div class="hero__logo"> <img alt="TrumpMobile" src="./assets/img/logo.png"> </div> <h2 class="hero__title">Own The Board</h2> <div class="hero__text">The path to ownership starts here.</div> <div class="hero__actions"> <a href="./swap" target="" class="hero__button button red"> <span>T ↔ USD1 Swap</span> </a> <div class="hero__social social"> <a href="http://t.me/Trump_Mobile_Token" target="_blank" class="social__item"> <svg xmlns="http://www.w3.org/2000/svg" width="22" height="19" viewbox="0 0 22 19" fill="none"> <path fill-rule="evenodd" clip-rule="evenodd" d="M19.7212 0.129985C19.9917 0.0148902 20.2877 -0.0248051 20.5786 0.0150299C20.8694 0.054865 21.1443 0.172775 21.3748 0.356486C21.6052 0.540197 21.7827 0.782995 21.8889 1.05961C21.995 1.33622 22.0259 1.63653 21.9782 1.92929L19.4957 17.1526C19.2549 18.621 17.6611 19.4631 16.329 18.7316C15.2147 18.1197 13.5597 17.1769 12.0711 16.1931C11.3267 15.7007 9.0467 14.1238 9.32691 13.0018C9.56772 12.0424 13.3988 8.4371 15.588 6.29365C16.4472 5.45154 16.0554 4.96575 15.0407 5.74036C12.5209 7.6636 8.47532 10.5883 7.13772 11.4116C5.95775 12.1375 5.34259 12.2615 4.60702 12.1375C3.26505 11.9118 2.0205 11.5621 1.00471 11.1361C-0.367906 10.5606 -0.301136 8.65289 1.00362 8.09738L19.7212 0.129985Z" fill="#F9F9F9"></path> </svg> </a> <a href="https://x.com/MaticShareGame" target="_blank" class="social__item"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="21" viewbox="0 0 24 21" fill="none"> <path d="M18.9 0H22.581L14.541 8.89531L24 21H16.5945L10.794 13.6572L4.1565 21H0.474L9.0735 11.4848L0 0H7.5945L12.837 6.70986L18.9 0ZM17.61 18.8681H19.65L6.4845 2.02034H4.2975L17.61 18.8681Z" fill="#F9F9F9"></path> </svg> </a> </div> </div> </div> <div class="hero__image"> <img alt="Monopoly" src="./assets/img/hero/01.webp" loading="eager" fetchpriority="high"> </div> </div> </section> <section class="page__join join default"> <div class="join__line default"> <div class="join__line-dec"> <img src="./assets/img/join/line-dec.svg" alt="Decor"> </div> </div> <div class="join__container"> <div class="join__main"> <div class="join__image"> <img alt="Monopoly" src="./assets/img/join/01.webp"> </div> <h2 class="join__title">Join The Movement</h2> <div class="join__text">BSC contract address:</div> <div class="join__form"> <div class="join__form-row"> <input id="contractAddress1" type="text" readonly value="0x7b47B9E05262C737B562C4881444370aA50234d4" class="join__form-input contract-address" style="cursor: pointer; background-color: #f5f5f5; width: 100%; min-height: 3.5rem; padding: 1rem 1.5rem; font-size: 0.8rem; max-width: 100%;"> </div> <div class="copy-notification" id="notification1" style="display: none; position: absolute; background: #1e3a8a; color: white; padding: 8px 12px; border-radius: 4px; font-size: 12px; margin-top: 5px;">Copied</div> </div> </div> </div> </section> <section class="page__about about" data-fls-watcher="navigator"> <div class="about__bg"> <img alt="BG" src="./assets/img/about/bg.webp" loading="lazy"> </div> <div class="about__container"> <div class="about__image"> <img alt="Monopoly" src="./assets/img/monopoly/01.png"> </div> <div class="about__content"> <h3 class="about__sub-title">More than a game</h3> <h2 class="about__title">About Us</h2> <div class="about__text"> <p>We are a community-driven project built on the BNB Smart Chain, designed to make holding tokens fun, rewarding, and fair. Our mission is simple:</p> <p>1. Reward loyal holders through smart contract–backed lottery draws.</p> <p>2. Protect the community with 100% locked liquidity — no rugs, no shortcuts.</p> <p>3. Empower fair participation by launching without presales or insider allocations.</p> </div> <a href="https://dexscreener.com/bsc/0x7E3286FF19b2c9CC80cf7013F32C3BA3e13e9C01" target="_blank" class="about__button button red"> <span>Reset the Board</span> </a> </div> </div> </section> <section class="page__monopoly monopoly" data-fls-watcher="navigator"> <div class="monopoly__bg"> <img alt="BG" src="./assets/img/monopoly/bg.webp" loading="lazy"> </div> <div class="monopoly__container"> <div class="monopoly__content"> <h3 class="monopoly__sub-title">Bigger, Louder, Everywhere</h3> <h2 class="monopoly__title">$T</h2> <div class="monopoly__text"> <p> By holding 50,000+ tokens, every member automatically qualifies for ongoing lottery rewards. Winners receive $USD1 stablecoins or partner $T tokens, making it possible to earn real value just by HODLing. </p> <p> We believe in transparency, fairness, and the power of decentralized communities. That’s why our smart contract is open, our liquidity is locked forever, and every lottery draw is recorded on-chain for the world to see. </p> <p>👉 Our motto: Holding = Winning.</p> </div> <a href="./swap" target="" class="monopoly__button button blue"> <span>Swap now</span> </a> </div> <div class="monopoly__image"> <img alt="Monopoly" src="./assets/img/contact/01.webp"> </div> </div> </section> <section class="page__features features" data-fls-watcher="navigator"> <div class="features__container"> <div class="features__cards"> <div class="features__card"> <div class="features__card-image-box image-box-1"> <img alt="Monopoly" src="./assets/img/features/01.webp"> </div> <div class="features__card-info"> <h3>Lottery</h3> <p> Every token holder with ≥ 50K balance automatically participates in ongoing raffles. </p> </div> </div> <div class="features__card"> <div class="features__card-image-box image-box-2"> <img alt="Monopoly" src="./assets/img/features/02.webp"> </div> <div class="features__card-info"> <h3>Transparent</h3> <p> All draws and winners are publicly visible via BscScan. </p> </div> </div> <div class="features__card"> <div class="features__card-image-box image-box-3"> <img alt="Monopoly" src="./assets/img/features/03.webp"> </div> <div class="features__card-info"> <h3>Rewards</h3> <p> Lottery rewards are distributed in USD1 (stable) or partner tokens (#T), providing real value instead of only native token inflation. </p> </div> </div> </div> </div> </section> <section class="page__level level" data-fls-watcher="navigator"> <div class="level__bg"> <img alt="BG" src="./assets/img/level/bg.webp" loading="lazy"> </div> <div class="level__container"> <div class="level__image"> <img alt="Monopoly" src="./assets/img/about/01.webp"> </div> <div class="level__content"> <h3 class="level__sub-title">Roll the dice</h3> <h2 class="level__title">Own The Board</h2> <div class="level__text"> <p> In crypto, the board is always shifting — markets rise and fall, trends come and go. But in our ecosystem, holders always stay in the game. </p> <p>1. Hold ≥ 50,000 tokens → You’re automatically on the board.</p> <p>2. Smart contract lotteries → Winners are chosen fairly and transparently.</p> <p>3. Stable rewards → Win $USD1 or partner tokens by simply holding.</p> </div> <a href="https://dexscreener.com/bsc/0x7E3286FF19b2c9CC80cf7013F32C3BA3e13e9C01" target="_blank" class="level__button button red"> <span>Reset the Board</span> </a> </div> </div> </section> <section class="page__join join reverse"> <div class="join__line reverse"> <div class="join__line-dec"> <img src="./assets/img/join/line-dec.svg" alt="Decor"> </div> </div> <div class="join__container"> <div class="join__main"> <div class="join__image"> <img alt="Monopoly" src="./assets/img/join/02.webp"> </div> <h2 class="join__title">Join The Movement</h2> <div class="join__text">BSC contract address:</div> <div class="join__form"> <div class="join__form-row"> <input id="contractAddress2" type="text" readonly value="0x7b47B9E05262C737B562C4881444370aA50234d4" class="join__form-input contract-address" style="cursor: pointer; background-color: #f5f5f5; width: 100%; min-height: 3.5rem; padding: 1rem 1.5rem; font-size: 0.8rem; max-width: 100%;"> </div> <div class="copy-notification" id="notification2" style="display: none; position: absolute; background: #1e3a8a; color: white; padding: 8px 12px; border-radius: 4px; font-size: 12px; margin-top: 5px;">Copied</div> </div> </div> </div> </section> <section class="page__contact contact"> <div class="contact__bg"> <img alt="BG" src="./assets/img/contact/bg.webp" loading="lazy"> </div> <div class="contact__container"> <div class="contact__content"> <div class="contact__logo"> <img alt="TrumpMobile" src="./assets/img/logo.png"> </div> <h2 class="contact__title">Our Partner</h2> <div class="contact__text"> <a href="https://web3.bitget.com/en/swap/bnb/0x7b47B9E05262C737B562C4881444370aA50234d4" target="_blank"><img src="./Partner/1.png" alt="" width="50px" height="50px"></a> <a href="https://web3.okx.com/token/bsc/0x7b47b9e05262c737b562c4881444370aa50234d4" target="_blank" ><img src="./Partner/2.png" alt="" width="50px" height="50px"></a> <a href="https://dex.coinmarketcap.com/token/bsc/0x7b47b9e05262c737b562c4881444370aa50234d4/" target="_blank" ><img src="./Partner/3.png" alt="" width="50px" height="50px"></a><br> <a href="https://dexscreener.com/bsc/0x7E3286FF19b2c9CC80cf7013F32C3BA3e13e9C01" target="_blank" ><img src="./Partner/4.png" alt="" width="50px" height="50px"></a> <a href="https://www.dextools.io/app/en/bnb/pair-explorer/0x7e3286ff19b2c9cc80cf7013f32c3ba3e13e9c01" target="_blank"><img src="./Partner/5.png" alt="" width="50px" height="50px"></a> <a href="https://www.dexview.com/bsc/0x7b47B9E05262C737B562C4881444370aA50234d4" target="_blank" ><img src="./Partner/6.png" alt="" width="50px" height="50px"></a><br> <a href="https://www.geckoterminal.com/bsc/pools/0x7e3286ff19b2c9cc80cf7013f32c3ba3e13e9c01" target="_blank" ><img src="./Partner/7.png" alt="" width="50px" height="50px"></a> <a href="https://pancakeswap.finance/swap?outputCurrency=0x7b47B9E05262C737B562C4881444370aA50234d4&chainId=56" target="_blank"><img src="./Partner/8.png" alt="" width="50px" height="50px"></a> <a href="https://ave.ai/token/0x7b47b9e05262c737b562c4881444370aa50234d4-bsc?from=Token" target="_blank" ><img src="./Partner/9.png" alt="" width="50px" height="50px"></a><br> <a href="https://maticshare.world/t" target="_blank" ><img src="./Partner/10.png" alt="" width="50px" height="50px"></a> <a href="https://worldlibertyfinancial.com/" target="_blank" ><img src="./Partner/12.png" alt="" width="50px" height="50px"></a> <a href="https://worldlibertyfinancial.com/providers" target="_blank"><img src="./Partner/11.png" alt="" width="50px" height="50px"></a><br> <a href="https://www.defined.fi/bsc/0x7E3286FF19b2c9CC80cf7013F32C3BA3e13e9C01?cache=ef2d2&quoteToken=token0" target="_blank"><img src="./Partner/14.png" alt="" width="50px" height="50px"></a> <a href="https://birdeye.so/bsc/token/0x7b47b9e05262c737b562c4881444370aa50234d4/0x7E3286FF19b2c9CC80cf7013F32C3BA3e13e9C01" target="_blank" ><img src="./Partner/13.png" alt="" width="50px" height="50px"></a> <a href="https://dexscreener.com/bsc/0x7E3286FF19b2c9CC80cf7013F32C3BA3e13e9C01" target="_blank" ><img src="./Partner/4.png" alt="" width="50px" height="50px"></a> </div> <div class="contact__actions"> <a href="./swap" target="" class="contact__button button red"> <span>T ↔ USD1 Swap</span> </a> <div class="contact__social social"> <a href="http://t.me/Trump_Mobile_Token" target="_blank" class="social__item"> <svg xmlns="http://www.w3.org/2000/svg" width="22" height="19" viewbox="0 0 22 19" fill="none"> <path fill-rule="evenodd" clip-rule="evenodd" d="M19.7212 0.129985C19.9917 0.0148902 20.2877 -0.0248051 20.5786 0.0150299C20.8694 0.054865 21.1443 0.172775 21.3748 0.356486C21.6052 0.540197 21.7827 0.782995 21.8889 1.05961C21.995 1.33622 22.0259 1.63653 21.9782 1.92929L19.4957 17.1526C19.2549 18.621 17.6611 19.4631 16.329 18.7316C15.2147 18.1197 13.5597 17.1769 12.0711 16.1931C11.3267 15.7007 9.0467 14.1238 9.32691 13.0018C9.56772 12.0424 13.3988 8.4371 15.588 6.29365C16.4472 5.45154 16.0554 4.96575 15.0407 5.74036C12.5209 7.6636 8.47532 10.5883 7.13772 11.4116C5.95775 12.1375 5.34259 12.2615 4.60702 12.1375C3.26505 11.9118 2.0205 11.5621 1.00471 11.1361C-0.367906 10.5606 -0.301136 8.65289 1.00362 8.09738L19.7212 0.129985Z" fill="#F9F9F9"></path> </svg> </a> <a href="https://x.com/MaticShareGame" target="_blank" class="social__item"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="21" viewbox="0 0 24 21" fill="none"> <path d="M18.9 0H22.581L14.541 8.89531L24 21H16.5945L10.794 13.6572L4.1565 21H0.474L9.0735 11.4848L0 0H7.5945L12.837 6.70986L18.9 0ZM17.61 18.8681H19.65L6.4845 2.02034H4.2975L17.61 18.8681Z" fill="#F9F9F9"></path> </svg> </a> </div> </div> </div> <div class="contact__image"> <br><br><br><img alt="Monopoly" src="./assets/img/contact/2.png"> </div> </div> </section> </main> <footer data-fls-footer="" class="footer"> <div class="footer__container"> <span style="text-align: center; display: block; width: 100%;">2025 © ALL RIGHTS RESERVED</span> </div> </footer> </div> <style> /* Scroll to top button - mobile only */ .scroll-to-top-btn { display: none; position: fixed; bottom: 20px; right: 20px; width: 44px; height: 44px; background-color: white; color: black; border: 1px solid black; border-radius: 8px; cursor: pointer; z-index: 1000; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; align-items: center; justify-content: center; } .scroll-to-top-btn:hover { background-color: #f8f8f8; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); } .scroll-to-top-btn.show { display: flex; align-items: center; justify-content: center; animation: fadeInUp 0.3s ease; } @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } } /* Show on all devices when scrolled */ @media (min-width: 768px) { .scroll-to-top-btn.show { display: flex !important; } } </style> <!-- Scroll to top button --> <button class="scroll-to-top-btn" id="scrollToTopBtn" title="Scroll to top"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M7 14L12 9L17 14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/> </svg> </button> <script> // iOS Safari scroll fix function fixScrollUpdateSafariIOs() { const isIosSafari = navigator.userAgent.match(/(iPod|iPhone|iPad)/) && navigator.userAgent.match(/AppleWebKit/); const isMobileSafari = isIosSafari && window.innerWidth < 768; if (isMobileSafari) { const logDiv = document.createElement('div'); logDiv.style.height = '0px'; logDiv.style.overflow = 'hidden'; document.body.appendChild(logDiv); function updateLog() { logDiv.innerHTML = window.scrollY.toFixed(0); } window.addEventListener('scroll', updateLog, { passive: true, capture: true }); window.addEventListener('touchstart', updateLog, { passive: true, capture: true }); window.addEventListener('touchmove', updateLog, { passive: true, capture: true }); window.addEventListener('touchend', updateLog, { passive: true, capture: true }); } } // Scroll to top functionality function initScrollToTop() { const scrollBtn = document.getElementById('scrollToTopBtn'); // Show/hide button based on scroll position window.addEventListener('scroll', function() { if (window.pageYOffset > 300) { scrollBtn.style.display = 'flex'; scrollBtn.classList.add('show'); } else { scrollBtn.style.display = 'none'; scrollBtn.classList.remove('show'); } }); // Scroll to top when button is clicked scrollBtn.addEventListener('click', function() { window.scrollTo({ top: 0, behavior: 'smooth' }); }); } // Clipboard functionality for contract addresses document.addEventListener('DOMContentLoaded', function() { // Apply iOS Safari scroll fix fixScrollUpdateSafariIOs(); // Initialize scroll to top functionality initScrollToTop(); // Add click handlers for contract address inputs document.querySelectorAll('.contract-address').forEach(function(input) { input.addEventListener('click', function() { this.select(); // Use modern clipboard API if available if (navigator.clipboard && window.isSecureContext) { navigator.clipboard.writeText(this.value).then(() => { showNotification(this.id); }); } else { // Fallback for older browsers document.execCommand('copy'); showNotification(this.id); } }); }); function showNotification(inputId) { const notificationId = inputId === 'contractAddress1' ? 'notification1' : 'notification2'; const notification = document.getElementById(notificationId); // Show notification notification.style.display = 'block'; // Hide notification after 2 seconds setTimeout(function() { notification.style.display = 'none'; }, 2000); } }); </script> </body> </html>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<link rel="preload" href="./assets/fonts/F37Judge-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+		<link rel="preload" href="./assets/img/hero/bg.webp" as="image">
+		<link rel="preload" href="./assets/img/hero/02.webp" as="image">
+		<link rel="dns-prefetch" href="//fonts.googleapis.com">
+		<link rel="dns-prefetch" href="//fonts.gstatic.com">
+		<link rel="shortcut icon" href="./assets/T.png">
+		<title>Trump Mobile - Own The Board</title>
+		<style>
+			body {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    [data-fls-loaded] body {
+      animation: show-body 0.3s ease 0.1s forwards;
+    }
+
+    @keyframes show-body {
+      0% {
+        opacity: 0;
+        visibility: hidden;
+      }
+      100% {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
+    /* Performance optimizations */
+    * {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    /* Optimize images */
+    img {
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+    }
+    
+    /* Reduce paint operations */
+    .hero__bg img,
+    .about__bg img,
+    .monopoly__bg img,
+    .level__bg img,
+    .contact__bg img {
+      will-change: transform;
+    }
+
+    /* Desktop-specific styling for contract address fields */
+    @media (min-width: 768px) {
+      .contract-address {
+        min-width: 325px !important;
+        width: 100% !important;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .contract-address {
+        min-width: 407px !important;
+      }
+    }
+
+    @media (min-width: 1440px) {
+      .contract-address {
+        min-width: 487px !important;
+      }
+    }
+
+    /* Fix horizontal scrolling issues on mobile */
+    @media (max-width: 47.99875em) {
+      /* iOS Safari fixed header fix - replace fixed with absolute */
+      body {
+        width: 100%;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+        position: static;
+        scroll-behavior: smooth;
+      }
+      
+      /* Remove problematic properties that break iOS Safari */
+      .wrapper {
+        overflow: visible !important;
+        contain: none !important;
+      }
+      
+      /* THE ACTUAL FIX: Replace position: fixed with position: absolute on iOS */
+      .header {
+        position: absolute !important;
+        will-change: auto !important;
+        transform: none !important;
+        z-index: 9999 !important;
+      }
+      
+      /* Fix features section background elements that use 100vw */
+      .features__cards::before,
+      .features__cards::after {
+        width: 100% !important;
+        left: 0 !important;
+        transform: none !important;
+      }
+      
+      /* Fix join section image transforms that cause overflow */
+      .join__image {
+        transform: translateX(0) scaleX(-1) !important;
+        max-width: 100%;
+      }
+      
+      .reverse .join__image {
+        transform: translateX(0) scaleX(-1) !important;
+      }
+      
+      /* Fix join section padding that uses viewport units */
+      .join__main {
+        padding: 1.25rem 1rem 1.625rem 1.25rem !important;
+        width: calc(100% - 1.875rem) !important;
+        max-width: 100%;
+      }
+      
+      /* Fix join line decoration that uses viewport units */
+      .join__line-dec::before {
+        width: 100% !important;
+        left: 0 !important;
+      }
+      
+      /* Ensure join line displays properly */
+      .join__line {
+        width: 100%;
+        overflow: visible;
+      }
+      
+      .join__line-dec {
+        width: 100%;
+        overflow: visible;
+      }
+      
+      /* Prevent horizontal overflow on specific problematic elements */
+      .features__cards,
+      .join__main,
+      .join__image {
+        max-width: 100vw;
+        overflow-x: hidden;
+      }
+    }
+		</style>
+		<style>
+			/* Mobile-only: center content containers so buttons center */
+			@media (max-width: 47.99875em) {
+				.about__content,
+				.monopoly__content,
+				.level__content {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					text-align: center;
+				}
+				.about__text,
+				.monopoly__text,
+				.level__text {
+					align-items: center;
+				}
+			}
+		</style>
+		<script type="module" crossorigin="" src="./js/index.min.js?v=1755523771715"></script>
+		<link rel="stylesheet" crossorigin="" href="./css/index.min.css?v=1755523771715">
+		<style>
+			/* Mobile-only centering for About, Monopoly, and Level sections (inline ensures it overrides) */
+			@media (max-width: 47.99875em) {
+				.about__sub-title,
+				.about__title,
+				.monopoly__sub-title,
+				.monopoly__title,
+				.level__sub-title,
+				.level__title {
+					text-align: center;
+				}
+			}
+		</style>
+		<script defer src="/_vercel/insights/script.js"></script>
+	</head>
+	<body>
+		<div class="wrapper">
+			<div class="menu-open-bg"></div>
+			<header data-fls-header="" data-fls-header-scroll="" class="header">
+				<div class="header__container">
+					<a href="" class="header__logo">
+						<img alt="TrumpMobile" src="./assets/img/logo.png">
+					</a>
+					<div class="header__main">
+						<div class="header__menu menu">
+							<button type="button" data-fls-menu="" class="menu__icon icon-menu"></button>
+							<nav class="menu__body">
+								<ul class="menu__list">
+									<li class="menu__item">
+										<a href="#" data-fls-scrollto=".about" class="menu__link">About Us</a>
+									</li>
+									<li class="menu__item">
+										<a href="#" data-fls-scrollto=".monopoly" class="menu__link">Trump Mobile</a>
+									</li>
+									<li class="menu__item">
+										<a href="#" data-fls-scrollto=".features" class="menu__link">How to Play</a>
+									</li>
+									<li class="menu__item">
+										<a href="#" data-fls-scrollto=".level" class="menu__link">Own The Board</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+						<div class="header__actions" data-fls-dynamic=".menu__body, 1024.98">
+							<a href="./swap" target="" class="header__button button red">
+								<span>join the game</span>
+							</a>
+							<div class="header__social social">
+								<a href="http://t.me/Trump_Mobile_Token" target="_blank" class="social__item">
+									<svg xmlns="http://www.w3.org/2000/svg" width="22" height="19" viewbox="0 0 22 19" fill="none">
+										<path fill-rule="evenodd" clip-rule="evenodd" d="M19.7212 0.129985C19.9917 0.0148902 20.2877 -0.0248051 20.5786 0.0150299C20.8694 0.054865 21.1443 0.172775 21.3748 0.356486C21.6052 0.540197 21.7827 0.782995 21.8889 1.05961C21.995 1.33622 22.0259 1.63653 21.9782 1.92929L19.4957 17.1526C19.2549 18.621 17.6611 19.4631 16.329 18.7316C15.2147 18.1197 13.5597 17.1769 12.0711 16.1931C11.3267 15.7007 9.0467 14.1238 9.32691 13.0018C9.56772 12.0424 13.3988 8.4371 15.588 6.29365C16.4472 5.45154 16.0554 4.96575 15.0407 5.74036C12.5209 7.6636 8.47532 10.5883 7.13772 11.4116C5.95775 12.1375 5.34259 12.2615 4.60702 12.1375C3.26505 11.9118 2.0205 11.5621 1.00471 11.1361C-0.367906 10.5606 -0.301136 8.65289 1.00362 8.09738L19.7212 0.129985Z" fill="#F9F9F9"></path>
+									</svg>
+								</a>
+								<a href="https://x.com/MaticShareGame" target="_blank" class="social__item">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="21" viewbox="0 0 24 21" fill="none">
+										<path d="M18.9 0H22.581L14.541 8.89531L24 21H16.5945L10.794 13.6572L4.1565 21H0.474L9.0735 11.4848L0 0H7.5945L12.837 6.70986L18.9 0ZM17.61 18.8681H19.65L6.4845 2.02034H4.2975L17.61 18.8681Z" fill="#F9F9F9"></path>
+									</svg>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</header>
+			<main class="page">
+				<section class="page__hero hero">
+					<div class="hero__bg">
+						<img alt="BG" src="./assets/img/hero/bg.webp" loading="eager" fetchpriority="high">
+					</div>
+					<div class="hero__container">
+						<div class="hero__content">
+							<div class="hero__logo">
+								<img alt="TrumpMobile" src="./assets/img/logo.png">
+								
+							</div>
+							<h2 class="hero__title">Own The Board</h2>
+							<div class="hero__text">The path to ownership starts here.</div>
+							<div class="hero__actions">
+								<a href="./swap" target="" class="hero__button button red">
+									<span>T ↔ USD1 Swap</span>
+								</a>
+								<div class="hero__social social">
+									<a href="http://t.me/Trump_Mobile_Token" target="_blank" class="social__item">
+										<svg xmlns="http://www.w3.org/2000/svg" width="22" height="19" viewbox="0 0 22 19" fill="none">
+											<path fill-rule="evenodd" clip-rule="evenodd" d="M19.7212 0.129985C19.9917 0.0148902 20.2877 -0.0248051 20.5786 0.0150299C20.8694 0.054865 21.1443 0.172775 21.3748 0.356486C21.6052 0.540197 21.7827 0.782995 21.8889 1.05961C21.995 1.33622 22.0259 1.63653 21.9782 1.92929L19.4957 17.1526C19.2549 18.621 17.6611 19.4631 16.329 18.7316C15.2147 18.1197 13.5597 17.1769 12.0711 16.1931C11.3267 15.7007 9.0467 14.1238 9.32691 13.0018C9.56772 12.0424 13.3988 8.4371 15.588 6.29365C16.4472 5.45154 16.0554 4.96575 15.0407 5.74036C12.5209 7.6636 8.47532 10.5883 7.13772 11.4116C5.95775 12.1375 5.34259 12.2615 4.60702 12.1375C3.26505 11.9118 2.0205 11.5621 1.00471 11.1361C-0.367906 10.5606 -0.301136 8.65289 1.00362 8.09738L19.7212 0.129985Z" fill="#F9F9F9"></path>
+										</svg>
+									</a>
+									<a href="https://x.com/MaticShareGame" target="_blank" class="social__item">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="21" viewbox="0 0 24 21" fill="none">
+											<path d="M18.9 0H22.581L14.541 8.89531L24 21H16.5945L10.794 13.6572L4.1565 21H0.474L9.0735 11.4848L0 0H7.5945L12.837 6.70986L18.9 0ZM17.61 18.8681H19.65L6.4845 2.02034H4.2975L17.61 18.8681Z" fill="#F9F9F9"></path>
+										</svg>
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="hero__image">
+							<img alt="Monopoly" src="./assets/img/hero/01.webp" loading="eager" fetchpriority="high">
+						</div>
+					</div>
+				</section>
+				<section class="page__join join default">
+					<div class="join__line default">
+						<div class="join__line-dec">
+							<img src="./assets/img/join/line-dec.svg" alt="Decor">
+						</div>
+					</div>
+					<div class="join__container">
+						<div class="join__main">
+							<div class="join__image">
+								<img alt="Monopoly" src="./assets/img/join/01.webp">
+							</div>
+							<h2 class="join__title">Join The Movement</h2>
+							<div class="join__text">BSC contract address:</div>
+							<div class="join__form">
+								<div class="join__form-row">
+									<input id="contractAddress1" type="text" readonly value="0x7b47B9E05262C737B562C4881444370aA50234d4" class="join__form-input contract-address" style="cursor: pointer; background-color: #f5f5f5; width: 100%; min-height: 3.5rem; padding: 1rem 1.5rem; font-size: 0.8rem; max-width: 100%;">
+								</div>
+								<div class="copy-notification" id="notification1" style="display: none; position: absolute; background: #1e3a8a; color: white; padding: 8px 12px; border-radius: 4px; font-size: 12px; margin-top: 5px;">Copied</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section class="page__about about" data-fls-watcher="navigator">
+					<div class="about__bg">
+						<img alt="BG" src="./assets/img/about/bg.webp" loading="lazy">
+					</div>
+					<div class="about__container">
+						<div class="about__image">
+							<img alt="Monopoly" src="./assets/img/monopoly/01.png">
+						</div>
+						<div class="about__content">
+							<h3 class="about__sub-title">More than a game</h3>
+							<h2 class="about__title">About Us</h2>
+							<div class="about__text">
+								<p>We are a community-driven project built on the BNB Smart Chain, designed to make holding tokens fun, rewarding, and fair. Our mission is simple:</p>
+
+<p>1. Reward loyal holders through smart contract–backed lottery draws.</p>
+
+<p>2. Protect the community with 100% locked liquidity — no rugs, no shortcuts.</p>
+
+<p>3. Empower fair participation by launching without presales or insider allocations.</p>
+
+
+								
+								
+							</div>
+							<a href="https://dexscreener.com/bsc/0x7E3286FF19b2c9CC80cf7013F32C3BA3e13e9C01" target="_blank" class="about__button button red">
+								<span>Reset the Board</span>
+							</a>
+						</div>
+					</div>
+				</section>
+				<section class="page__monopoly monopoly" data-fls-watcher="navigator">
+					<div class="monopoly__bg">
+						<img alt="BG" src="./assets/img/monopoly/bg.webp" loading="lazy">
+					</div>
+					<div class="monopoly__container">
+						<div class="monopoly__content">
+							<h3 class="monopoly__sub-title">Bigger, Louder, Everywhere</h3>
+							<h2 class="monopoly__title">$T</h2>
+							<div class="monopoly__text">
+								
+
+
+								<p>
+									By holding 50,000+ tokens, every member automatically qualifies for ongoing lottery rewards. Winners receive $USD1 stablecoins or partner $T tokens, making it possible to earn real value just by HODLing.
+								</p>
+								<p>
+									We believe in transparency, fairness, and the power of decentralized communities. That’s why our smart contract is open, our liquidity is locked forever, and every lottery draw is recorded on-chain for the world to see.
+								</p>
+								<p>👉 Our motto: Holding = Winning.</p>
+							</div>
+							<a href="./swap" target="" class="monopoly__button button blue">
+								<span>Swap now</span>
+							</a>
+						</div>
+						<div class="monopoly__image">
+							<img alt="Monopoly" src="./assets/img/contact/01.webp">	
+						</div>
+					</div>
+				</section>
+				<section class="page__features features" data-fls-watcher="navigator">
+					<div class="features__container">
+						<div class="features__cards">
+							<div class="features__card">
+								<div class="features__card-image-box image-box-1">
+									<img alt="Monopoly" src="./assets/img/features/01.webp">
+								</div>
+								<div class="features__card-info">
+									<h3>Lottery</h3>
+									<p>
+										Every token holder with ≥ 50K balance automatically participates in ongoing raffles.
+									</p>
+								</div>
+							</div>
+							<div class="features__card">
+								<div class="features__card-image-box image-box-2">
+									<img alt="Monopoly" src="./assets/img/features/02.webp">
+								</div>
+								<div class="features__card-info">
+									<h3>Transparent</h3>
+									<p>
+										All draws and winners are publicly visible via BscScan.
+									</p>
+								</div>
+							</div>
+							<div class="features__card">
+								<div class="features__card-image-box image-box-3">
+									<img alt="Monopoly" src="./assets/img/features/03.webp">
+								</div>
+								<div class="features__card-info">
+									<h3>Rewards</h3>
+									<p>
+										Lottery rewards are distributed in USD1 (stable) or partner tokens (#T), providing real value instead of only native token inflation.
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			
+				<section class="page__level level" data-fls-watcher="navigator">
+					<div class="level__bg">
+						<img alt="BG" src="./assets/img/level/bg.webp" loading="lazy">
+					</div>
+					
+					<div class="level__container">
+						<div class="level__image">
+							<img alt="Monopoly" src="./assets/img/about/01.webp">
+						</div>
+						<div class="level__content">
+							<h3 class="level__sub-title">Roll the dice</h3>
+							<h2 class="level__title">Own The Board</h2>
+							<div class="level__text">
+								<p>
+									In crypto, the board is always shifting — markets rise and fall, trends come and go. But in our ecosystem, holders always stay in the game.
+								</p>
+								<p>1. Hold ≥ 50,000 tokens → You’re automatically on the board.</p>
+
+<p>2. Smart contract lotteries → Winners are chosen fairly and transparently.</p>
+
+<p>3. Stable rewards → Win $USD1 or partner tokens by simply holding.</p>
+							</div>
+							<a href="https://dexscreener.com/bsc/0x7E3286FF19b2c9CC80cf7013F32C3BA3e13e9C01" target="_blank" class="level__button button red">
+								<span>Reset the Board</span>
+							</a>
+						</div>
+					</div>
+				</section>
+				<section class="page__join join reverse">
+					<div class="join__line reverse">
+						<div class="join__line-dec">
+							<img src="./assets/img/join/line-dec.svg" alt="Decor">
+						</div>
+					</div>
+					<div class="join__container">
+						<div class="join__main">
+							<div class="join__image">
+								<img alt="Monopoly" src="./assets/img/join/02.webp">
+							</div>
+							<h2 class="join__title">Join The Movement</h2>
+							<div class="join__text">BSC contract address:</div>
+							<div class="join__form">
+								<div class="join__form-row">
+									<input id="contractAddress2" type="text" readonly value="0x7b47B9E05262C737B562C4881444370aA50234d4" class="join__form-input contract-address" style="cursor: pointer; background-color: #f5f5f5; width: 100%; min-height: 3.5rem; padding: 1rem 1.5rem; font-size: 0.8rem; max-width: 100%;">
+								</div>
+								<div class="copy-notification" id="notification2" style="display: none; position: absolute; background: #1e3a8a; color: white; padding: 8px 12px; border-radius: 4px; font-size: 12px; margin-top: 5px;">Copied</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				
+
+
+				
+				<section class="page__contact contact">
+					<div class="contact__bg">
+						<img alt="BG" src="./assets/img/contact/bg.webp" loading="lazy">
+					</div>
+					<div class="contact__container">
+						<div class="contact__content">
+							<div class="contact__logo">
+								<img alt="TrumpMobile" src="./assets/img/logo.png">
+							</div>
+							<h2 class="contact__title">Our Partner</h2>
+							<div class="contact__text">
+ <a href="https://web3.bitget.com/en/swap/bnb/0x7b47B9E05262C737B562C4881444370aA50234d4"
+                target="_blank"><img src="./Partner/1.png" alt="" width="50px"
+                  height="50px"></a>
+<a href="https://web3.okx.com/token/bsc/0x7b47b9e05262c737b562c4881444370aa50234d4" target="_blank"
+               ><img src="./Partner/2.png" alt="" width="50px" height="50px"></a>
+<a href="https://dex.coinmarketcap.com/token/bsc/0x7b47b9e05262c737b562c4881444370aa50234d4/" target="_blank"
+               ><img src="./Partner/3.png" alt="" width="50px" height="50px"></a><br>
+<a href="https://dexscreener.com/bsc/0x7E3286FF19b2c9CC80cf7013F32C3BA3e13e9C01" target="_blank"
+               ><img src="./Partner/4.png" alt="" width="50px"
+                  height="50px"></a>
+<a href="https://www.dextools.io/app/en/bnb/pair-explorer/0x7e3286ff19b2c9cc80cf7013f32c3ba3e13e9c01"
+                target="_blank"><img src="./Partner/5.png" alt="" width="50px"
+                  height="50px"></a>
+<a href="https://www.dexview.com/bsc/0x7b47B9E05262C737B562C4881444370aA50234d4" target="_blank"
+               ><img src="./Partner/6.png" alt="" width="50px"
+                  height="50px"></a><br>
+<a href="https://www.geckoterminal.com/bsc/pools/0x7e3286ff19b2c9cc80cf7013f32c3ba3e13e9c01" target="_blank"
+               ><img src="./Partner/7.png" alt="" width="50px"
+                  height="50px"></a>
+<a href="https://pancakeswap.finance/swap?outputCurrency=0x7b47B9E05262C737B562C4881444370aA50234d4&chainId=56"
+                target="_blank"><img src="./Partner/8.png" alt="" width="50px"
+                  height="50px"></a>
+<a href="https://ave.ai/token/0x7b47b9e05262c737b562c4881444370aa50234d4-bsc?from=Token" target="_blank"
+               ><img src="./Partner/9.png" alt="" width="50px" height="50px"></a><br>
+<a href="https://maticshare.world/t" target="_blank"
+               ><img src="./Partner/10.png" alt="" width="50px"
+                  height="50px"></a>
+<a href="https://worldlibertyfinancial.com/" target="_blank"
+               ><img src="./Partner/12.png" alt="" width="50px" height="50px"></a>
+<a href="https://worldlibertyfinancial.com/providers"
+                target="_blank"><img src="./Partner/11.png" alt="" width="50px"
+                  height="50px"></a><br>
+<a href="https://www.defined.fi/bsc/0x7E3286FF19b2c9CC80cf7013F32C3BA3e13e9C01?cache=ef2d2&quoteToken=token0"
+                target="_blank"><img src="./Partner/14.png" alt="" width="50px"
+                  height="50px"></a>
+<a href="https://birdeye.so/bsc/token/0x7b47b9e05262c737b562c4881444370aa50234d4/0x7E3286FF19b2c9CC80cf7013F32C3BA3e13e9C01" target="_blank"
+               ><img src="./Partner/13.png" alt="" width="50px" height="50px"></a>
+<a href="https://dexscreener.com/bsc/0x7E3286FF19b2c9CC80cf7013F32C3BA3e13e9C01" target="_blank"
+               ><img src="./Partner/4.png" alt="" width="50px"
+                  height="50px"></a>
+
+								
+							
+						</div>
+							<div class="contact__actions">
+								<a href="./swap" target="" class="contact__button button red">
+									<span>T ↔ USD1 Swap</span>
+								</a>
+								<div class="contact__social social">
+									<a href="http://t.me/Trump_Mobile_Token" target="_blank" class="social__item">
+										<svg xmlns="http://www.w3.org/2000/svg" width="22" height="19" viewbox="0 0 22 19" fill="none">
+											<path fill-rule="evenodd" clip-rule="evenodd" d="M19.7212 0.129985C19.9917 0.0148902 20.2877 -0.0248051 20.5786 0.0150299C20.8694 0.054865 21.1443 0.172775 21.3748 0.356486C21.6052 0.540197 21.7827 0.782995 21.8889 1.05961C21.995 1.33622 22.0259 1.63653 21.9782 1.92929L19.4957 17.1526C19.2549 18.621 17.6611 19.4631 16.329 18.7316C15.2147 18.1197 13.5597 17.1769 12.0711 16.1931C11.3267 15.7007 9.0467 14.1238 9.32691 13.0018C9.56772 12.0424 13.3988 8.4371 15.588 6.29365C16.4472 5.45154 16.0554 4.96575 15.0407 5.74036C12.5209 7.6636 8.47532 10.5883 7.13772 11.4116C5.95775 12.1375 5.34259 12.2615 4.60702 12.1375C3.26505 11.9118 2.0205 11.5621 1.00471 11.1361C-0.367906 10.5606 -0.301136 8.65289 1.00362 8.09738L19.7212 0.129985Z" fill="#F9F9F9"></path>
+										</svg>
+									</a>
+									<a href="https://x.com/MaticShareGame" target="_blank" class="social__item">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="21" viewbox="0 0 24 21" fill="none">
+											<path d="M18.9 0H22.581L14.541 8.89531L24 21H16.5945L10.794 13.6572L4.1565 21H0.474L9.0735 11.4848L0 0H7.5945L12.837 6.70986L18.9 0ZM17.61 18.8681H19.65L6.4845 2.02034H4.2975L17.61 18.8681Z" fill="#F9F9F9"></path>
+										</svg>
+									</a>
+							
+
+
+									
+
+						
+								</div>
+
+
+
+
+
+								
+							</div>
+						</div>
+						<div class="contact__image">
+							<br><br><br><img alt="Monopoly" src="./assets/img/contact/2.png">
+						</div>
+					</div>
+				</section>
+			</main>			
+			<footer data-fls-footer="" class="footer">
+				<div class="footer__container">
+					<span style="text-align: center; display: block; width: 100%;">2025 © ALL RIGHTS RESERVED</span>
+				</div>
+			</footer>
+		</div>
+		
+		<style>
+			/* Scroll to top button - mobile only */
+			.scroll-to-top-btn {
+				display: none;
+				position: fixed;
+				bottom: 20px;
+				right: 20px;
+				width: 44px;
+				height: 44px;
+				background-color: white;
+				color: black;
+				border: 1px solid black;
+				border-radius: 8px;
+				cursor: pointer;
+				z-index: 1000;
+				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+				transition: all 0.3s ease;
+				align-items: center;
+				justify-content: center;
+			}
+			
+			.scroll-to-top-btn:hover {
+				background-color: #f8f8f8;
+				transform: translateY(-1px);
+				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+			}
+			
+			.scroll-to-top-btn.show {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				animation: fadeInUp 0.3s ease;
+			}
+			
+			@keyframes fadeInUp {
+				from {
+					opacity: 0;
+					transform: translateY(20px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+			
+			/* Show on all devices when scrolled */
+			@media (min-width: 768px) {
+				.scroll-to-top-btn.show {
+					display: flex !important;
+				}
+			}
+		</style>
+		
+		<!-- Scroll to top button -->
+		<button class="scroll-to-top-btn" id="scrollToTopBtn" title="Scroll to top">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M7 14L12 9L17 14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+		</button>
+		
+		<script>
+			// iOS Safari scroll fix
+			function fixScrollUpdateSafariIOs() {
+				const isIosSafari = navigator.userAgent.match(/(iPod|iPhone|iPad)/) && navigator.userAgent.match(/AppleWebKit/);
+				const isMobileSafari = isIosSafari && window.innerWidth < 768;
+				
+				if (isMobileSafari) {
+					const logDiv = document.createElement('div');
+					logDiv.style.height = '0px';
+					logDiv.style.overflow = 'hidden';
+					document.body.appendChild(logDiv);
+					
+					function updateLog() {
+						logDiv.innerHTML = window.scrollY.toFixed(0);
+					}
+					
+					window.addEventListener('scroll', updateLog, { passive: true, capture: true });
+					window.addEventListener('touchstart', updateLog, { passive: true, capture: true });
+					window.addEventListener('touchmove', updateLog, { passive: true, capture: true });
+					window.addEventListener('touchend', updateLog, { passive: true, capture: true });
+				}
+			}
+			
+			// Scroll to top functionality
+			function initScrollToTop() {
+				const scrollBtn = document.getElementById('scrollToTopBtn');
+				
+				// Show/hide button based on scroll position
+				window.addEventListener('scroll', function() {
+					if (window.pageYOffset > 300) {
+						scrollBtn.style.display = 'flex';
+						scrollBtn.classList.add('show');
+					} else {
+						scrollBtn.style.display = 'none';
+						scrollBtn.classList.remove('show');
+					}
+				});
+				
+				// Scroll to top when button is clicked
+				scrollBtn.addEventListener('click', function() {
+					window.scrollTo({
+						top: 0,
+						behavior: 'smooth'
+					});
+				});
+			}
+			
+			// Clipboard functionality for contract addresses
+			document.addEventListener('DOMContentLoaded', function() {
+				// Apply iOS Safari scroll fix
+				fixScrollUpdateSafariIOs();
+				// Initialize scroll to top functionality
+				initScrollToTop();
+				// Add click handlers for contract address inputs
+				document.querySelectorAll('.contract-address').forEach(function(input) {
+					input.addEventListener('click', function() {
+						this.select();
+						
+						// Use modern clipboard API if available
+						if (navigator.clipboard && window.isSecureContext) {
+							navigator.clipboard.writeText(this.value).then(() => {
+								showNotification(this.id);
+							});
+						} else {
+							// Fallback for older browsers
+							document.execCommand('copy');
+							showNotification(this.id);
+						}
+					});
+				});
+				
+				function showNotification(inputId) {
+					const notificationId = inputId === 'contractAddress1' ? 'notification1' : 'notification2';
+					const notification = document.getElementById(notificationId);
+					
+					// Show notification
+					notification.style.display = 'block';
+					
+					// Hide notification after 2 seconds
+					setTimeout(function() {
+						notification.style.display = 'none';
+					}, 2000);
+				}
+			});
+		</script>
+	</body>
+</html>
