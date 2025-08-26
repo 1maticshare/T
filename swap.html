@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>T ↔ USD1 Swap (PancakeSwap v2 on BSC)</title>
+  <title>T ↔ USD1 Swap (BSC)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -49,7 +49,7 @@
       <div class="header">
         <h1>T ↔ USD1 Swap (BSC)</h1>
         <div class="row">
-          <div class="net" id="network">Disconnected</div>
+          <div class="net" id="network"><!--Disconnected--!></div>
           <button class="btn accent" id="connectBtn">Connect Wallet</button>
         </div>
       </div>
@@ -73,7 +73,7 @@
           <div>
             <span class="tag" id="fromSym">—</span>
             <span class="muted">Balance:</span> <span id="fromBal">—</span>
-            <span class="muted">Allowance:</span> <span id="fromAll">—</span>
+            <span class="muted">Allowance:</span> <!--<span id="fromAll">—</span>--!>
           </div>
           <button class="btn secondary" id="maxBtn">Max</button>
         </div>
@@ -118,14 +118,14 @@
         </div>
       </div>
 
-      <div class="panel">
+     <center> <div class="panel">
         <div class="row">
           <button class="btn secondary" id="approveBtn" disabled>Approve</button>
           <button class="btn success" id="swapBtn" disabled>Swap</button>
         </div>
         <div class="status" id="status" style="margin-top:10px">—</div>
         <div class="status link" id="txlink"></div>
-      </div>
+      </div></center>
 
      <div class="panel" style="display:flex;gap:10px;align-items:center;justify-content:space-between">
         <!--<div class="muted">Router: PancakeSwap v2</div>
