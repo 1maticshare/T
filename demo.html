@@ -149,6 +149,8 @@
   };
 
   const PANCAKE_ROUTER_V2 = '0x10ED43C718714eb63d5aA57B78B54704E256024E';
+  const WBNB = '0xBB4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c';
+  const BUSD = '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56';
 
   const ERC20_ABI = [
     'function name() view returns (string)',
@@ -163,11 +165,6 @@
     'function getAmountsOut(uint amountIn, address[] calldata path) external view returns (uint[] memory amounts)',
     'function swapExactTokensForTokens(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline) external returns (uint[] memory amounts)'
   ];
-
-  const TOKENS = {
-    USD1: { address: '0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d' },
-    T:    { address: '0x7b47B9E05262C737B562C4881444370aA50234d4' }
-  };
 
   // --- Elements ---
   const connectBtn = document.getElementById('connectBtn');
@@ -192,7 +189,8 @@
 
   let provider, signer, account;
   let router;
-  const tokenMeta = {}; // address -> {symbol, decimals}
+  const tokenMeta = {}; // address -> {symbol, decimals, contract}
+  let currentPath = null; // chosen path for last quote
 
   function fmt(x, d=4){
     try{
@@ -212,7 +210,6 @@
 
   function ensureDifferent(){
     if(fromSel.value.toLowerCase()===toSel.value.toLowerCase()){
-      // auto flip to keep different
       [...toSel.options].forEach((o,i)=>{ if(o.value.toLowerCase()!==fromSel.value.toLowerCase()) toSel.selectedIndex=i; });
     }
   }
@@ -271,33 +268,51 @@
     ]);
     fromBal.textContent = fmt(ethers.utils.formatUnits(balFrom, mFrom.decimals));
     fromAll.textContent = fmt(ethers.utils.formatUnits(allowance, mFrom.decimals));
-    // Enable/disable Approve/Swap
     const amountIn = fromAmt.value ? ethers.utils.parseUnits(fromAmt.value || '0', mFrom.decimals) : ethers.constants.Zero;
     const enoughAllowance = allowance.gte(amountIn) && !amountIn.isZero();
     approveBtn.disabled = !account || amountIn.isZero() || enoughAllowance;
     swapBtn.disabled    = !account || amountIn.isZero();
   }
 
-  function getPath(){ return [fromSel.value, toSel.value]; }
+  // Try candidate paths and return the first that yields an output (direct, via WBNB, via BUSD)
+  async function findPath(amountIn){
+    const from = fromSel.value; const to = toSel.value;
+    const candidatePaths = [ [from, to], [from, WBNB, to], [from, BUSD, to] ];
+    for(const p of candidatePaths){
+      try{
+        const outs = await router.getAmountsOut(amountIn, p);
+        return { path: p, out: outs[outs.length-1] };
+      }catch(e){ /* try next */ }
+    }
+    return null;
+  }
 
   async function quote(){
     try{
       await refreshMeta();
       const from = fromSel.value; const to = toSel.value;
       const mFrom = await readTokenMeta(from); const mTo = await readTokenMeta(to);
-      if(!fromAmt.value || Number(fromAmt.value)<=0){ toAmt.value=''; document.getElementById('minOut').textContent='—'; priceHint.textContent='—'; await refreshBalances(); return; }
+      if(!fromAmt.value || Number(fromAmt.value)<=0){ toAmt.value=''; document.getElementById('minOut').textContent='—'; priceHint.textContent='—'; await refreshBalances(); currentPath=null; return; }
       const amountIn = ethers.utils.parseUnits(fromAmt.value, mFrom.decimals);
-      const amounts = await router.getAmountsOut(amountIn, getPath());
-      const out = amounts[amounts.length-1];
+      const result = await findPath(amountIn);
+      if(!result){
+        setStatus('No route / insufficient liquidity');
+        toAmt.value = '';
+        document.getElementById('minOut').textContent='—';
+        priceHint.textContent='—';
+        currentPath = null;
+        return;
+      }
+      currentPath = result.path;
+      const out = result.out;
       const outHuman = ethers.utils.formatUnits(out, mTo.decimals);
       toAmt.value = outHuman;
-      // slippage
       const slip = Math.max(0, Number(slippage.value||'0'))/100;
       const minOut = out.mul(ethers.BigNumber.from(10000 - Math.floor(slip*10000))).div(10000);
       document.getElementById('minOut').textContent = fmt(ethers.utils.formatUnits(minOut, mTo.decimals));
-      priceHint.textContent = `Price: 1 ${mFrom.symbol} ≈ ${fmt(Number(outHuman)/Number(fromAmt.value), 6)} ${mTo.symbol}`;
+      priceHint.textContent = `Price: 1 ${mFrom.symbol} ≈ ${fmt(Number(outHuman)/Number(fromAmt.value), 6)} ${mTo.symbol} (via ${currentPath.length>2? 'router':'direct'})`;
       await refreshBalances();
-    } catch(err){ console.warn(err); toAmt.value=''; document.getElementById('minOut').textContent='—'; priceHint.textContent='—'; }
+    } catch(err){ console.warn(err); toAmt.value=''; document.getElementById('minOut').textContent='—'; priceHint.textContent='—'; currentPath=null; }
   }
 
   async function doApprove(){
@@ -318,18 +333,21 @@
       setStatus('Submitting swap…');
       const [mFrom, mTo] = await Promise.all([readTokenMeta(fromSel.value), readTokenMeta(toSel.value)]);
       const amountIn  = ethers.utils.parseUnits(fromAmt.value, mFrom.decimals);
-      const quoteOuts = await router.getAmountsOut(amountIn, getPath());
-      const out       = quoteOuts[quoteOuts.length-1];
+      // Ensure we have a valid path for this amount
+      const result = await findPath(amountIn);
+      if(!result){ setStatus('Swap failed: no route or insufficient liquidity'); return; }
+      const path = result.path;
+      const out   = result.out;
       const slipPct   = Math.max(0, Number(slippage.value||'0'))/100;
       const minOut    = out.mul(ethers.BigNumber.from(10000 - Math.floor(slipPct*10000))).div(10000);
       const ddl       = Math.max(1, parseInt(deadline.value||'20',10));
       const dlUnix    = Math.floor(Date.now()/1000) + ddl*60;
       const tx = await router.swapExactTokensForTokens(
-        amountIn, minOut, getPath(), account, dlUnix
+        amountIn, minOut, path, account, dlUnix
       );
       setTx(tx.hash);
       setStatus('Waiting for confirmation…');
-      const rec = await tx.wait();
+      await tx.wait();
       setStatus('Swap executed ✅');
       await refreshBalances();
       await quote();
