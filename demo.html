@@ -52,7 +52,7 @@
       <div class="header">
         <h1>T ↔ USD1 Swap (BSC)</h1>
         <div class="row">
-          <div class="net" id="network"><!--Disconnected--!></div>
+          <div class="net" id="network"></div>
           <button class="btn accent" id="connectBtn">Connect Wallet</button>
         </div>
       </div>
@@ -63,18 +63,16 @@
           <div class="token-side" style="flex:1">
             <div class="token-select" style="min-width:220px">
               <select id="fromToken">
-                <!-- Pre-filled with USD1 and T; you can add more options -->
                 <option value="0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d" selected>USD1 (World Liberty Financial)</option>
                 <option value="0x7b47B9E05262C737B562C4881444370aA50234d4">T (Trump Mobile)</option>
               </select>
-            <small class="muted">Pair: 0x7E3286FF19b2c9CC80cf7013F32C3BA3e13e9C01</small>  
+              <small class="muted">Pair: 0x7E3286FF19b2c9CC80cf7013F32C3BA3e13e9C01</small>  
             </div>
           </div>
           <input id="fromAmount" type="text" placeholder="0.0" inputmode="decimal" style="max-width:220px" />
         </div>
         <div class="meta" style="margin-top:10px">
           <div>
-			  
             <span class="tag" id="fromSym">—</span>
             <span class="muted">Balance:</span> <span id="fromBal">—</span>
             <span class="muted">Allowance:</span> <span id="fromAll">—</span>
@@ -93,10 +91,8 @@
           <div class="token-side" style="flex:1">
             <div class="token-select" style="min-width:220px">
               <select id="toToken">
-                <option value="0x7b47B9E05262C737B562C4881444370aA50234d4"><img src="./Partner/10.png" alt="" width="10px"
-                  height="10px">T (Trump Mobile)</option>
-                <option value="0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d"><img src="./Partner/11.png" alt="" width="10px"
-                  height="10px">USD1 (World Liberty Financial)</option>
+                <option value="0x7b47B9E05262C737B562C4881444370aA50234d4">T (Trump Mobile)</option>
+                <option value="0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d">USD1 (World Liberty Financial)</option>
               </select>
             </div>
           </div>
@@ -124,7 +120,7 @@
         </div>
       </div>
 
-     <div class="panel">
+      <div class="panel">
         <div class="row">
           <button class="btn secondary" id="approveBtn" disabled>Approve</button>
           <button class="btn success" id="swapBtn" disabled>Swap</button>
@@ -132,24 +128,19 @@
         <div class="status" id="status" style="margin-top:10px">—</div>
         <div class="status link" id="txlink"></div>
       </div>
-
-     <div class="panel" style="display:flex;gap:10px;align-items:center;justify-content:space-between">
-        <!--<div class="muted">Router: PancakeSwap v2</div>
-        <a href="https://pancakeswap.finance/swap?outputCurrency=0x7b47B9E05262C737B562C4881444370aA50234d4&inputCurrency=0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d" target="_blank">Open on PancakeSwap</a>--!>
-      </div>
     </div>
   </div>
-<footer data-fls-footer="" class="footer">
-				<div class="footer__container">
-					<span style="text-align: center; display: block; width: 100%;">2025 © ALL RIGHTS RESERVED</span>
-				</div>
-			</footer>
+<footer class="footer">
+  <div class="footer__container">
+    <span style="text-align: center; display: block; width: 100%;">2025 © ALL RIGHTS RESERVED</span>
+  </div>
+</footer>
+
 <script>
 (async function(){
   const { ethers } = window.ethers;
 
-  // --- Constants ---
-  const CHAIN_ID = 56; // BSC mainnet
+  const CHAIN_ID = 56; // BSC
   const RPC_PARAMS = {
     chainId: '0x38',
     chainName: 'BNB Smart Chain',
@@ -159,6 +150,8 @@
   };
 
   const PANCAKE_ROUTER_V2 = '0x10ED43C718714eb63d5aA57B78B54704E256024E';
+  const PANCAKE_FACTORY_V2 = '0xBCfCcbde45cE874adCB698cC183deBcF17952812';
+  const WBNB = '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c';
 
   const ERC20_ABI = [
     'function name() view returns (string)',
@@ -174,12 +167,22 @@
     'function swapExactTokensForTokens(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline) external returns (uint[] memory amounts)'
   ];
 
+  const FACTORY_ABI = [
+    'function getPair(address tokenA, address tokenB) external view returns (address)'
+  ];
+
+  const PAIR_ABI = [
+    'function getReserves() view returns (uint112,uint112,uint32)'
+  ];
+
   const TOKENS = {
     USD1: { address: '0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d' },
     T:    { address: '0x7b47B9E05262C737B562C4881444370aA50234d4' }
   };
 
-  // --- Elements ---
+  let provider, signer, account, router;
+  const tokenMeta = {};
+
   const connectBtn = document.getElementById('connectBtn');
   const approveBtn = document.getElementById('approveBtn');
   const swapBtn = document.getElementById('swapBtn');
@@ -200,10 +203,6 @@
   const netEl = document.getElementById('network');
   const priceHint = document.getElementById('priceHint');
 
-  let provider, signer, account;
-  let router;
-  const tokenMeta = {}; // address -> {symbol, decimals}
-
   function fmt(x, d=4){
     try{
       const n = Number(x);
@@ -215,17 +214,7 @@
   }
 
   function setStatus(msg){ statusEl.textContent = msg || '—'; txlinkEl.textContent=''; }
-
-  function setTx(hash){
-    txlinkEl.innerHTML = `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`;
-  }
-
-  function ensureDifferent(){
-    if(fromSel.value.toLowerCase()===toSel.value.toLowerCase()){
-      // auto flip to keep different
-      [...toSel.options].forEach((o,i)=>{ if(o.value.toLowerCase()!==fromSel.value.toLowerCase()) toSel.selectedIndex=i; });
-    }
-  }
+  function setTx(hash){ txlinkEl.innerHTML = `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`; }
 
   async function connect(){
     if(!window.ethereum){ alert('No wallet found. Please install MetaMask.'); return; }
@@ -263,120 +252,58 @@
   }
 
   async function refreshMeta(){
-    const from = fromSel.value; const to = toSel.value;
-    const [mFrom, mTo] = await Promise.all([readTokenMeta(from), readTokenMeta(to)]);
+    const [mFrom, mTo] = await Promise.all([readTokenMeta(fromSel.value), readTokenMeta(toSel.value)]);
     fromSym.textContent = mFrom.symbol;
     toSym.textContent   = mTo.symbol;
   }
 
   async function refreshBalances(){
     if(!account) return;
-    const from = fromSel.value; const to = toSel.value;
-    const mFrom = await readTokenMeta(from);
-    const mTo   = await readTokenMeta(to);
-    const [balFrom, balTo, allowance] = await Promise.all([
+    const mFrom = await readTokenMeta(fromSel.value);
+    const mTo   = await readTokenMeta(toSel.value);
+    const [balFrom, , allowance] = await Promise.all([
       mFrom.contract.balanceOf(account),
       mTo.contract.balanceOf(account),
       mFrom.contract.allowance(account, PANCAKE_ROUTER_V2)
     ]);
     fromBal.textContent = fmt(ethers.utils.formatUnits(balFrom, mFrom.decimals));
     fromAll.textContent = fmt(ethers.utils.formatUnits(allowance, mFrom.decimals));
-    // Enable/disable Approve/Swap
     const amountIn = fromAmt.value ? ethers.utils.parseUnits(fromAmt.value || '0', mFrom.decimals) : ethers.constants.Zero;
     const enoughAllowance = allowance.gte(amountIn) && !amountIn.isZero();
     approveBtn.disabled = !account || amountIn.isZero() || enoughAllowance;
     swapBtn.disabled    = !account || amountIn.isZero();
   }
 
-  function getPath(){ return [fromSel.value, toSel.value]; }
+  // ---- Modified Path Selection ----
+  async function getPath() {
+    const factory = new ethers.Contract(PANCAKE_FACTORY_V2, FACTORY_ABI, provider);
+    const from = fromSel.value;
+    const to   = toSel.value;
+
+    try {
+      const pair = await factory.getPair(from, to);
+      if (pair !== ethers.constants.AddressZero) {
+        const pairContract = new ethers.Contract(pair, PAIR_ABI, provider);
+        const reserves = await pairContract.getReserves();
+        if (reserves[0].gt(0) && reserves[1].gt(0)) {
+          return [from, to]; // direct pool exists
+        }
+      }
+    } catch(e) {
+      console.warn("Direct pair check failed, fallback to WBNB route");
+    }
+    // fallback via WBNB
+    return [from, WBNB, to];
+  }
 
   async function quote(){
     try{
       await refreshMeta();
-      const from = fromSel.value; const to = toSel.value;
-      const mFrom = await readTokenMeta(from); const mTo = await readTokenMeta(to);
       if(!fromAmt.value || Number(fromAmt.value)<=0){ toAmt.value=''; document.getElementById('minOut').textContent='—'; priceHint.textContent='—'; await refreshBalances(); return; }
-      const amountIn = ethers.utils.parseUnits(fromAmt.value, mFrom.decimals);
-      const amounts = await router.getAmountsOut(amountIn, getPath());
-      const out = amounts[amounts.length-1];
-      const outHuman = ethers.utils.formatUnits(out, mTo.decimals);
-      toAmt.value = outHuman;
-      // slippage
-      const slip = Math.max(0, Number(slippage.value||'0'))/100;
-      const minOut = out.mul(ethers.BigNumber.from(10000 - Math.floor(slip*10000))).div(10000);
-      document.getElementById('minOut').textContent = fmt(ethers.utils.formatUnits(minOut, mTo.decimals));
-      priceHint.textContent = `Price: 1 ${mFrom.symbol} ≈ ${fmt(Number(outHuman)/Number(fromAmt.value), 6)} ${mTo.symbol}`;
-      await refreshBalances();
-    } catch(err){ console.warn(err); toAmt.value=''; document.getElementById('minOut').textContent='—'; priceHint.textContent='—'; }
-  }
-
-  async function doApprove(){
-    try{
-      setStatus('Approving…');
       const mFrom = await readTokenMeta(fromSel.value);
-      const tx = await mFrom.contract.connect(signer).approve(PANCAKE_ROUTER_V2, ethers.constants.MaxUint256);
-      setTx(tx.hash);
-      await tx.wait();
-      setStatus('Approved ✅');
-      await refreshBalances();
-      await quote();
-    } catch(err){ console.error(err); setStatus('Approve failed: '+(err.data?.message || err.message)); }
-  }
-
-  async function doSwap(){
-    try{
-      setStatus('Submitting swap…');
-      const [mFrom, mTo] = await Promise.all([readTokenMeta(fromSel.value), readTokenMeta(toSel.value)]);
-      const amountIn  = ethers.utils.parseUnits(fromAmt.value, mFrom.decimals);
-      const quoteOuts = await router.getAmountsOut(amountIn, getPath());
-      const out       = quoteOuts[quoteOuts.length-1];
-      const slipPct   = Math.max(0, Number(slippage.value||'0'))/100;
-      const minOut    = out.mul(ethers.BigNumber.from(10000 - Math.floor(slipPct*10000))).div(10000);
-      const ddl       = Math.max(1, parseInt(deadline.value||'20',10));
-      const dlUnix    = Math.floor(Date.now()/1000) + ddl*60;
-      const tx = await router.swapExactTokensForTokens(
-        amountIn, minOut, getPath(), account, dlUnix
-      );
-      setTx(tx.hash);
-      setStatus('Waiting for confirmation…');
-      const rec = await tx.wait();
-      setStatus('Swap executed ✅');
-      await refreshBalances();
-      await quote();
-    } catch(err){ console.error(err); setStatus('Swap failed: '+(err.data?.message || err.message)); }
-  }
-
-  function flip(){
-    const a = fromSel.selectedIndex; const b = toSel.selectedIndex;
-    fromSel.selectedIndex = b===a ? (a===0?1:0) : b;
-    toSel.selectedIndex   = a;
-    ensureDifferent();
-    quote();
-  }
-
-  // --- Wire up ---
-  connectBtn.addEventListener('click', connect);
-  approveBtn.addEventListener('click', doApprove);
-  swapBtn.addEventListener('click', doSwap);
-  fromSel.addEventListener('change', ()=>{ ensureDifferent(); quote(); });
-  toSel.addEventListener('change', ()=>{ ensureDifferent(); quote(); });
-  fromAmt.addEventListener('input', ()=>{ quote(); });
-  slippage.addEventListener('input', ()=>{ quote(); });
-  deadline.addEventListener('input', ()=>{});
-  maxBtn.addEventListener('click', async ()=>{
-    if(!account) return; const mFrom = await readTokenMeta(fromSel.value);
-    const bal = await tokenMeta[fromSel.value.toLowerCase()].contract.balanceOf(account);
-    fromAmt.value = ethers.utils.formatUnits(bal, mFrom.decimals);
-    quote();
-  });
-  flipBtn.addEventListener('click', flip);
-
-  // Preload metadata for default tokens
-  try{
-    provider = new ethers.providers.JsonRpcProvider(RPC_PARAMS.rpcUrls[0]);
-    await refreshMeta();
-  } catch(e){}
-})();
-</script>
-</body>
-</html>
+      const mTo   = await readTokenMeta(toSel.value);
+      const amountIn = ethers.utils.parseUnits(fromAmt.value, mFrom.decimals);
+      const path = await getPath();
+      const amounts = await router.getAmountsOut(amountIn, path);
+      const out = amounts[amounts.length-1];
+      const outHuman = ethers.utils.formatUnits(out
