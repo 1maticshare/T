@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>T ↔ USD1 Swap (BSC)</title>
-  <link rel="shortcut icon" href="./assets/T.png">
+  <title>T ↔ USD1 Swap (PancakeSwap v2 on BSC)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -45,49 +44,47 @@
   <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
 </head>
 <body>
-  <center><a href="https://trumpmobile.meme" target="">
-   <img alt="TrumpMobile" src="./assets/img/logo.png" alt="" width="225px" height="75px"></a></center>
   <div class="wrap">
     <div class="card">
       <div class="header">
-        <h1>T ↔ USD1 Swap (BSC)</h1>
+        <h1>Swap • PancakeSwap v2 (BSC)</h1>
         <div class="row">
-          <div class="net" id="network"><!--Disconnected--!></div>
+          <div class="net" id="network">Disconnected</div>
           <button class="btn accent" id="connectBtn">Connect Wallet</button>
         </div>
       </div>
 
+      <!-- From Token -->
       <div class="panel">
         <div class="label">From</div>
         <div class="token-box">
           <div class="token-side" style="flex:1">
             <div class="token-select" style="min-width:220px">
               <select id="fromToken">
-                <!-- Pre-filled with USD1 and T; you can add more options -->
                 <option value="0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d" selected>USD1 (World Liberty Financial)</option>
                 <option value="0x7b47B9E05262C737B562C4881444370aA50234d4">T (Trump Mobile)</option>
               </select>
-             <small class="muted">Pair: 0x7E3286FF19b2c9CC80cf7013F32C3BA3e13e9C01</small>
-
+              <small class="muted">Pair: 0x7E3286FF19b2c9CC80cf7013F32C3BA3e13e9C01</small>
             </div>
           </div>
           <input id="fromAmount" type="text" placeholder="0.0" inputmode="decimal" style="max-width:220px" />
         </div>
         <div class="meta" style="margin-top:10px">
           <div>
-			   
             <span class="tag" id="fromSym">—</span>
             <span class="muted">Balance:</span> <span id="fromBal">—</span>
-            <span class="muted" >Allowance:</span> <span id="fromAll">—</span>
+            <span class="muted">Allowance:</span> <span id="fromAll">—</span>
           </div>
           <button class="btn secondary" id="maxBtn">Max</button>
         </div>
       </div>
 
+      <!-- Flip -->
       <div class="swap-mid">
         <button id="flipBtn">⇅</button>
       </div>
 
+      <!-- To Token -->
       <div class="panel">
         <div class="label">To (estimated)</div>
         <div class="token-box">
@@ -110,11 +107,12 @@
         </div>
       </div>
 
+      <!-- Settings -->
       <div class="panel">
         <div class="grid">
           <label>
             <div class="label">Slippage (%)</div>
-            <input id="slippage" type="text" value="3" />
+            <input id="slippage" type="text" value="0.5" />
           </label>
           <label>
             <div class="label">Deadline (mins)</div>
@@ -123,7 +121,8 @@
         </div>
       </div>
 
-     <div class="panel">
+      <!-- Actions -->
+      <div class="panel">
         <div class="row">
           <button class="btn secondary" id="approveBtn" disabled>Approve</button>
           <button class="btn success" id="swapBtn" disabled>Swap</button>
@@ -132,32 +131,28 @@
         <div class="status link" id="txlink"></div>
       </div>
 
-     <div class="panel" style="display:flex;gap:10px;align-items:center;justify-content:space-between">
-        <!--<div class="muted">Router: PancakeSwap v2</div>
-        <a href="https://pancakeswap.finance/swap?outputCurrency=0x7b47B9E05262C737B562C4881444370aA50234d4&inputCurrency=0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d" target="_blank">Open on PancakeSwap</a>--!>
+      <div class="panel" style="display:flex;gap:10px;align-items:center;justify-content:space-between">
+        <div class="muted">Router: PancakeSwap v2</div>
+        <a href="https://pancakeswap.finance/swap?outputCurrency=0x7b47B9E05262C737B562C4881444370aA50234d4&inputCurrency=0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d" target="_blank">Open on PancakeSwap</a>
       </div>
     </div>
   </div>
-<footer data-fls-footer="" class="footer">
-				<div class="footer__container">
-					<span style="text-align: center; display: block; width: 100%;">2025 © ALL RIGHTS RESERVED</span>
-				</div>
-			</footer>
+
 <script>
 (async function(){
-  const { ethers } = window.ethers;
+  const ethers = window.ethers;
 
   // --- Constants ---
-  const CHAIN_ID = 56; // BSC mainnet
   const RPC_PARAMS = {
     chainId: '0x38',
     chainName: 'BNB Smart Chain',
     nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
-    rpcUrls: ['https://bsc-dataseed1.binance.org','https://bsc-dataseed2.defibit.io','https://bsc-mainnet.infura.io'],
+    rpcUrls: ['https://bsc-dataseed1.binance.org','https://bsc-dataseed2.defibit.io'],
     blockExplorerUrls: ['https://bscscan.com/']
   };
 
   const PANCAKE_ROUTER_V2 = '0x10ED43C718714eb63d5aA57B78B54704E256024E';
+  const WBNB = "0xBB4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c";
 
   const ERC20_ABI = [
     'function name() view returns (string)',
@@ -172,11 +167,6 @@
     'function getAmountsOut(uint amountIn, address[] calldata path) external view returns (uint[] memory amounts)',
     'function swapExactTokensForTokens(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline) external returns (uint[] memory amounts)'
   ];
-
-  const TOKENS = {
-    USD1: { address: '0x8d0D000Ee44948FC98c9B98A4FA4921476f08B0d' },
-    T:    { address: '0x7b47B9E05262C737B562C4881444370aA50234d4' }
-  };
 
   // --- Elements ---
   const connectBtn = document.getElementById('connectBtn');
@@ -201,7 +191,7 @@
 
   let provider, signer, account;
   let router;
-  const tokenMeta = {}; // address -> {symbol, decimals}
+  const tokenMeta = {};
 
   function fmt(x, d=4){
     try{
@@ -214,16 +204,18 @@
   }
 
   function setStatus(msg){ statusEl.textContent = msg || '—'; txlinkEl.textContent=''; }
-
-  function setTx(hash){
-    txlinkEl.innerHTML = `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`;
-  }
+  function setTx(hash){ txlinkEl.innerHTML = `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`; }
 
   function ensureDifferent(){
     if(fromSel.value.toLowerCase()===toSel.value.toLowerCase()){
-      // auto flip to keep different
       [...toSel.options].forEach((o,i)=>{ if(o.value.toLowerCase()!==fromSel.value.toLowerCase()) toSel.selectedIndex=i; });
     }
+  }
+
+  function getPath(){
+    const from = fromSel.value; const to = toSel.value;
+    if(from === WBNB || to === WBNB){ return [from, to]; }
+    return [from, WBNB, to]; // route via WBNB if needed
   }
 
   async function connect(){
@@ -262,45 +254,37 @@
   }
 
   async function refreshMeta(){
-    const from = fromSel.value; const to = toSel.value;
-    const [mFrom, mTo] = await Promise.all([readTokenMeta(from), readTokenMeta(to)]);
+    const [mFrom, mTo] = await Promise.all([readTokenMeta(fromSel.value), readTokenMeta(toSel.value)]);
     fromSym.textContent = mFrom.symbol;
     toSym.textContent   = mTo.symbol;
   }
 
   async function refreshBalances(){
     if(!account) return;
-    const from = fromSel.value; const to = toSel.value;
-    const mFrom = await readTokenMeta(from);
-    const mTo   = await readTokenMeta(to);
-    const [balFrom, balTo, allowance] = await Promise.all([
+    const mFrom = await readTokenMeta(fromSel.value);
+    const [balFrom, allowance] = await Promise.all([
       mFrom.contract.balanceOf(account),
-      mTo.contract.balanceOf(account),
       mFrom.contract.allowance(account, PANCAKE_ROUTER_V2)
     ]);
     fromBal.textContent = fmt(ethers.utils.formatUnits(balFrom, mFrom.decimals));
     fromAll.textContent = fmt(ethers.utils.formatUnits(allowance, mFrom.decimals));
-    // Enable/disable Approve/Swap
     const amountIn = fromAmt.value ? ethers.utils.parseUnits(fromAmt.value || '0', mFrom.decimals) : ethers.constants.Zero;
     const enoughAllowance = allowance.gte(amountIn) && !amountIn.isZero();
     approveBtn.disabled = !account || amountIn.isZero() || enoughAllowance;
     swapBtn.disabled    = !account || amountIn.isZero();
   }
 
-  function getPath(){ return [fromSel.value, toSel.value]; }
-
   async function quote(){
     try{
       await refreshMeta();
-      const from = fromSel.value; const to = toSel.value;
-      const mFrom = await readTokenMeta(from); const mTo = await readTokenMeta(to);
+      const mFrom = await readTokenMeta(fromSel.value);
+      const mTo = await readTokenMeta(toSel.value);
       if(!fromAmt.value || Number(fromAmt.value)<=0){ toAmt.value=''; document.getElementById('minOut').textContent='—'; priceHint.textContent='—'; await refreshBalances(); return; }
       const amountIn = ethers.utils.parseUnits(fromAmt.value, mFrom.decimals);
       const amounts = await router.getAmountsOut(amountIn, getPath());
       const out = amounts[amounts.length-1];
       const outHuman = ethers.utils.formatUnits(out, mTo.decimals);
       toAmt.value = outHuman;
-      // slippage
       const slip = Math.max(0, Number(slippage.value||'0'))/100;
       const minOut = out.mul(ethers.BigNumber.from(10000 - Math.floor(slip*10000))).div(10000);
       document.getElementById('minOut').textContent = fmt(ethers.utils.formatUnits(minOut, mTo.decimals));
@@ -313,69 +297,4 @@
     try{
       setStatus('Approving…');
       const mFrom = await readTokenMeta(fromSel.value);
-      const tx = await mFrom.contract.connect(signer).approve(PANCAKE_ROUTER_V2, ethers.constants.MaxUint256);
-      setTx(tx.hash);
-      await tx.wait();
-      setStatus('Approved ✅');
-      await refreshBalances();
-      await quote();
-    } catch(err){ console.error(err); setStatus('Approve failed: '+(err.data?.message || err.message)); }
-  }
-
-  async function doSwap(){
-    try{
-      setStatus('Submitting swap…');
-      const [mFrom, mTo] = await Promise.all([readTokenMeta(fromSel.value), readTokenMeta(toSel.value)]);
-      const amountIn  = ethers.utils.parseUnits(fromAmt.value, mFrom.decimals);
-      const quoteOuts = await router.getAmountsOut(amountIn, getPath());
-      const out       = quoteOuts[quoteOuts.length-1];
-      const slipPct   = Math.max(0, Number(slippage.value||'0'))/100;
-      const minOut    = out.mul(ethers.BigNumber.from(10000 - Math.floor(slipPct*10000))).div(10000);
-      const ddl       = Math.max(1, parseInt(deadline.value||'20',10));
-      const dlUnix    = Math.floor(Date.now()/1000) + ddl*60;
-      const tx = await router.swapExactTokensForTokens(
-        amountIn, minOut, getPath(), account, dlUnix
-      );
-      setTx(tx.hash);
-      setStatus('Waiting for confirmation…');
-      const rec = await tx.wait();
-      setStatus('Swap executed ✅');
-      await refreshBalances();
-      await quote();
-    } catch(err){ console.error(err); setStatus('Swap failed: '+(err.data?.message || err.message)); }
-  }
-
-  function flip(){
-    const a = fromSel.selectedIndex; const b = toSel.selectedIndex;
-    fromSel.selectedIndex = b===a ? (a===0?1:0) : b;
-    toSel.selectedIndex   = a;
-    ensureDifferent();
-    quote();
-  }
-
-  // --- Wire up ---
-  connectBtn.addEventListener('click', connect);
-  approveBtn.addEventListener('click', doApprove);
-  swapBtn.addEventListener('click', doSwap);
-  fromSel.addEventListener('change', ()=>{ ensureDifferent(); quote(); });
-  toSel.addEventListener('change', ()=>{ ensureDifferent(); quote(); });
-  fromAmt.addEventListener('input', ()=>{ quote(); });
-  slippage.addEventListener('input', ()=>{ quote(); });
-  deadline.addEventListener('input', ()=>{});
-  maxBtn.addEventListener('click', async ()=>{
-    if(!account) return; const mFrom = await readTokenMeta(fromSel.value);
-    const bal = await tokenMeta[fromSel.value.toLowerCase()].contract.balanceOf(account);
-    fromAmt.value = ethers.utils.formatUnits(bal, mFrom.decimals);
-    quote();
-  });
-  flipBtn.addEventListener('click', flip);
-
-  // Preload metadata for default tokens
-  try{
-    provider = new ethers.providers.JsonRpcProvider(RPC_PARAMS.rpcUrls[0]);
-    await refreshMeta();
-  } catch(e){}
-})();
-</script>
-</body>
-</html>
+      const tx = await mFrom.contract.connect(signer).approve(PANCA
