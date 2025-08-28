@@ -238,161 +238,39 @@
  <title>WLFI — Historic Launch — September 1, 2025</title>
   <meta name="description" content="The historic launch of $WLFI — comprehensive ecosystem, USD1 stablecoin, ALT5 Sigma treasury, top exchange listings, and more." />
 
-			<style>
+		<style>
     :root {
-      --bg:#0f1724;
-      --card:#0b1220;
-      --accent:#ff7a18;
-      --muted:#94a3b8;
-      --glass:rgba(255,255,255,0.03);
+      --bg: #071028;
+      --card: #071b2b;
+      --accent: #ff7a18;
+      --muted: #9fb4c9;
+      --glass: rgba(255,255,255,0.03);
+      --radius: 14px;
     }
-
-    body {
-      margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-      background: linear-gradient(180deg, #071028 0%, #071b36 100%);
-      color: #e6eef8;
-      line-height: 1.6;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 24px;
-    }
-
-    .card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-      border-radius: 16px;
-      padding: 28px;
-      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
-      border: 1px solid rgba(255,255,255,0.05);
-      margin-bottom: 32px;
-    }
-
-    header h3 {
-      text-align: center;
-      font-size: 1.6rem;
-      margin: 0 0 20px 0;
-    }
-
-    header h1 {
-      font-size: 2rem;
-      margin: 0 0 12px 0;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 10px;
-    }
-
-    header p.lead {
-      margin: 0 0 20px 0;
-      color: var(--muted);
-      font-size: 1.1rem;
-      text-align: center;
-    }
-
-    .pill {
-      background: linear-gradient(90deg,var(--accent),#f09b3c);
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-weight: 600;
-      color: #071022;
-      font-size: 0.85rem;
-      display: inline-block;
-    }
-
-    ul.bullets {
-      list-style: none;
-      padding: 0;
-      margin: 18px 0 22px 0;
-      display: grid;
-      gap: 14px;
-    }
-
-    ul.bullets li {
-      background: var(--glass);
-      border-radius: 12px;
-      padding: 16px;
-      display: grid;
-      grid-template-columns: 36px 1fr;
-      gap: 12px;
-      align-items: start;
-    }
-
-    .num {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.06);
-      display: grid;
-      place-items: center;
-      font-weight: 700;
-      font-size: 0.9rem;
-    }
-
-    .meta {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-
-    .meta a {
-      color: #cfe7ff;
-      text-decoration: none;
-      border-bottom: 1px dashed rgba(255,255,255,0.1);
-      padding-bottom: 2px;
-      font-size: 0.95rem;
-    }
-
-    .cta {
-      display: flex;
-      gap: 12px;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 10px 16px;
-      border-radius: 12px;
-      font-weight: 700;
-      border: 0;
-      cursor: pointer;
-      font-size: 0.95rem;
-    }
-
-    .btn.primary {
-      background: linear-gradient(90deg,var(--accent),#ffb36f);
-      color: #071022;
-    }
-
-    .btn.ghost {
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.1);
-      color: #e6eef8;
-    }
-
-    footer.hashtags {
-      margin-top: 20px;
-      color: var(--muted);
-      font-size: 0.9rem;
-      text-align: center;
-    }
-
-    /* Responsive styles */
-    @media (max-width: 900px) {
-      .container { padding: 16px; }
-      header h1 { font-size: 1.5rem; }
-      header h3 { font-size: 1.3rem; }
-    }
-
-    @media (max-width: 600px) {
-      .card { padding: 18px; }
-      header h1 { font-size: 1.3rem; flex-direction: column; text-align: center; }
-      .pill { margin: 0 auto; }
-      .btn { flex: 1; text-align: center; }
-    }
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;color:#eaf2ff;background:linear-gradient(180deg,#041025 0%, #07112a 100%);-webkit-font-smoothing:antialiased}
+    .wrap{max-width:1100px;margin:36px auto;padding:20px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:var(--radius);padding:28px;box-shadow:0 10px 40px rgba(2,6,23,0.7);border:1px solid rgba(255,255,255,0.04)}
+    header{display:flex;flex-direction:column;gap:10px}
+    .top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .pill{background:linear-gradient(90deg,var(--accent),#ffb57a);padding:6px 12px;border-radius:999px;font-weight:700;color:#081022}
+    h1{margin:0;font-size:1.6rem;line-height:1.2;display:flex;align-items:center;gap:12px}
+    p.lead{margin:0;color:var(--muted)}
+    .content{margin-top:18px;display:grid;gap:16px}
+    ol.points{padding-left:18px;margin:0;display:grid;gap:12px}
+    li.point{background:var(--glass);border-radius:12px;padding:14px;list-style:decimal;margin-left:16px}
+    li.point strong{display:block;font-size:1.03rem}
+    .muted{color:var(--muted);margin-top:8px;line-height:1.45}
+    .meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px}
+    a.link{color:#cfe7ff;text-decoration:none;border-bottom:1px dashed rgba(255,255,255,0.03);padding-bottom:2px}
+    .cta-row{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+    .btn{padding:10px 14px;border-radius:10px;font-weight:800;border:0;cursor:pointer}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),#ffb36f);color:#081022}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#eaf2ff}
+    .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .tag{background:rgba(255,255,255,0.02);padding:6px 10px;border-radius:8px;font-weight:700}
+    footer.note{color:var(--muted);margin-top:18px;font-size:0.95rem}
+    @media (max-width:720px){.wrap{padding:14px}.card{padding:18px}h1{font-size:1.25rem}}
+    code.small{background:rgba(0,0,0,0.25);padding:4px 6px;border-radius:6px;font-size:0.95rem}
   </style>
 
 <body>
@@ -486,7 +364,7 @@
 
       <div class="cta">
         <button class="btn primary" onclick="navigator.clipboard.writeText(window.location.href).then(()=>{alert('Page URL copied — share it!')})">Share This Launch</button>
-        <a href="https://x.com/intent/tweet?text=The%20historic%20launch%20of%20%24WLFI%20on%20Sept%201%20marks%20a%20new%20financial%20era%20https://trumpmobile.meme/news/wlfi-launch%20#WLFI%20#USD!" target="_blank" rel="noopener noreferrer"><button class="btn ghost">Tweet</button></a>
+        <a href="https://x.com/intent/tweet?text=The%20historic%20launch%20of%20%24WLFI%20on%20Sept%201%20marks%20a%20new%20financial%20era%20https://trumpmobile.meme/news/wlfi-launch" target="_blank" rel="noopener noreferrer"><button class="btn ghost">Share on X</button></a>
       </div>
 
       <footer class="hashtags">
